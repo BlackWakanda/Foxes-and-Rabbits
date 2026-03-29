@@ -24,6 +24,8 @@ public class Simulator
     // The probability that a rabbit will be created in any given grid position.
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;    
 
+    private static final double MOUSE_CREATION_PROBABILITY = 0.03;
+
     // List of animals in the field.
     private List<Animal> animals;
     // The current state of the field.
@@ -145,6 +147,11 @@ public class Simulator
                     Location location = new Location(row, col);
                     Rabbit rabbit = new Rabbit(true, field, location);
                     animals.add(rabbit);
+                }
+                else if (rand.nextDouble() <= MOUSE_CREATION_PROBABILITY){
+                    Location location = new Location(row, col);
+                    Mouse mouse - new Mouse (true, field, location);
+                    animals.add(mouse);
                 }
                 // else leave the location empty.
             }

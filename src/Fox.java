@@ -112,7 +112,14 @@ public class Fox extends Animal
                     foodLevel = RABBIT_FOOD_VALUE;
                     // Remove the dead rabbit from the field.
                     return where;
+                }else if( animal instanceof Mouse){
+                    Mouse mouse = (Mouse) animal;
+                    if(mouse.isAlive()) { 
+                    mouse.setDead();
+                    foodLevel = MOSUE_FOOD_VALUE;
+                    return where;
                 }
+                
             }
         }
         return null;

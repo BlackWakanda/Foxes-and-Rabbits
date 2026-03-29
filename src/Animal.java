@@ -105,6 +105,13 @@ public abstract class Animal
     {
         return getAge() >= getBreedingAge();
     }
+
+     private void giveBirth()
+    {
+        
+        Field field = getField();
+        List<Location> free = field.getFreeAdjacentLocations(getLocation());
+        int births = breed();
  //Carlton - added getAge() and setAge() methods
     /**
      * Return the age of this animal.

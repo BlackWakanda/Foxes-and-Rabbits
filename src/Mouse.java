@@ -44,8 +44,9 @@ public class Mouse extends Animal
     {
         // New mice are born into adjacent locations.
         // Get a list of adjacent free locations.
-        List<Location> free = getField().getFreeAdjacentLocations(getLocation());
-        int births = breed();
+        /*List<Location> free = getField().getFreeAdjacentLocations(getLocation());
+        int births = breed();*/
+        super.giveBirth;
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
             Mouse young = new Mouse(getField(), loc, false);

@@ -38,16 +38,18 @@ public class Mouse extends Animal
 
     public void giveBirth(List<Animal> newMice)
     {
-        // New mice are born into adjacent locations.
-        // Get a list of adjacent free locations.
-        /*List<Location> free = getField().getFreeAdjacentLocations(getLocation());
-        int births = breed();*/
-        super.giveBirth;
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Mouse young = new Mouse(getField(), loc, false);
-            newMice.add(young);
-        }
+        super.giveBirth(newMice);
+    }
+
+    /**
+     * Create a new young mouse.
+     * @param field The field currently occupied.
+     * @param location The location within the field.
+     * @return A new young mouse.
+     */
+    protected Animal createYoung(Field field, Location location)
+    {
+        return new Mouse(field, location, false);
     }
 
     protected int getBreedingAge()
@@ -55,20 +57,16 @@ public class Mouse extends Animal
         return BREEDING_AGE;
     }
 
-    
     protected int getMaxAge()
     {
         return MAX_AGE;
     }
 
-  
     protected double getBreedingProbability()
     {
         return BREEDING_PROBABILITY;
     }
 
-   
-     
     protected int getMaxLitterSize()
     {
         return MAX_LITTER_SIZE;

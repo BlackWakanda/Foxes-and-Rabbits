@@ -150,7 +150,7 @@ public class Simulator
                 }
                 else if (rand.nextDouble() <= MOUSE_CREATION_PROBABILITY){
                     Location location = new Location(row, col);
-                    Mouse mouse - new Mouse (true, field, location);
+                    Mouse mouse = new Mouse(field, location, true);
                     animals.add(mouse);
                 }
                 // else leave the location empty.

@@ -68,19 +68,20 @@ public class Rabbit extends Animal
      * New births will be made into free adjacent locations.
      * @param newRabbits A list to return newly born rabbits.
      */
-    private void giveBirth(List<Animal> newRabbits)
+    protected void giveBirth(List<Animal> newRabbits)
     {
-        // New rabbits are born into adjacent locations.
-        // Get a list of adjacent free locations.
-       /* Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        int births = breed();*/
-        super.giveBirth;
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Rabbit young = new Rabbit(false, field, loc);
-            newRabbits.add(young);
-        }
+        super.giveBirth(newRabbits);
+    }
+
+    /**
+     * Create a new young rabbit.
+     * @param field The field currently occupied.
+     * @param location The location within the field.
+     * @return A new young rabbit.
+     */
+    protected Animal createYoung(Field field, Location location)
+    {
+        return new Rabbit(false, field, location);
     }
         
     /**

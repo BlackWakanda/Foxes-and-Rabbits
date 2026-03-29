@@ -45,7 +45,7 @@ public class Fox extends Animal
         super(field, location);
         if(randomAge) {
             setAge(rand.nextInt(MAX_AGE));
-            foodLevel = rand.nextInt(RABBIT_FOOD_VALUE + MOSUE_FOOD_VALUE);
+            foodLevel = rand.nextInt(RABBIT_FOOD_VALUE + MOUSE_FOOD_VALUE);
         }
         else {
             setAge(0);
@@ -114,14 +114,15 @@ public class Fox extends Animal
                     foodLevel = RABBIT_FOOD_VALUE;
                     // Remove the dead rabbit from the field.
                     return where;
-                }else if( animal instanceof Mouse){
-                    Mouse mouse = (Mouse) animal;
-                    if(mouse.isAlive()) { 
+                }
+            }
+            else if(animal instanceof Mouse) {
+                Mouse mouse = (Mouse) animal;
+                if(mouse.isAlive()) { 
                     mouse.setDead();
-                    foodLevel = MOSUE_FOOD_VALUE;
+                    foodLevel = MOUSE_FOOD_VALUE;
                     return where;
                 }
-                
             }
         }
         return null;
@@ -132,19 +133,20 @@ public class Fox extends Animal
      * New births will be made into free adjacent locations.
      * @param newFoxes A list to return newly born foxes.
      */
-    private void giveBirth(List<Animal> newFoxes)
+    protected void giveBirth(List<Animal> newFoxes)
     {
-        // New foxes are born into adjacent locations.
-        // Get a list of adjacent free locations.
-        /*Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        int births = breed();*/
-        super.giveBirth;
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Fox young = new Fox(false, field, loc);
-            newFoxes.add(young);
-        }
+        super.giveBirth(newFoxes);
+    }
+
+    /**
+     * Create a new young fox.
+     * @param field The field currently occupied.
+     * @param location The location within the field.
+     * @return A new young fox.
+     */
+    protected Animal createYoung(Field field, Location location)
+    {
+        return new Fox(false, field, location);
     }
         
     /**

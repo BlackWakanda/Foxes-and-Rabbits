@@ -106,13 +106,35 @@ public abstract class Animal
         return getAge() >= getBreedingAge();
     }
 
-     private void giveBirth()
+    /**
+     * Check whether or not this animal is to give birth at this step.
+     * New births will be made into free adjacent locations.
+     * @param newAnimals A list to return newly born animals.
+     */
+    protected void giveBirth(List<Animal> newAnimals)
     {
-        
+        // New animals are born into adjacent locations.
+        // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
         int births = breed();
- //Carlton - added getAge() and setAge() methods
+        for(int b = 0; b < births && free.size() > 0; b++) {
+            Location loc = free.remove(0);
+            Animal young = createYoung(field, loc);
+            newAnimals.add(young);
+        }
+    }
+
+    /**
+     * Create a new young animal of the appropriate type.
+     * This method must be implemented by subclasses.
+     * @param field The field currently occupied.
+     * @param location The location within the field.
+     * @return A new young animal.
+     */
+    abstract protected Animal createYoung(Field field, Location location);
+
+    //Carlton - added getAge() and setAge() methods
     /**
      * Return the age of this animal.
      * @return The age of this animal.

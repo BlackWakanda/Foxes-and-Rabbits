@@ -25,6 +25,8 @@ public class Fox extends Animal
     // The food value of a single rabbit. In effect, this is the
     // number of steps a fox can go before it has to eat again.
     private static final int RABBIT_FOOD_VALUE = 9;
+
+    private static final int MOUSE_FOOD_VALUE = 4;
     
     // Individual characteristics (instance fields).
     // The fox's food level, which is increased by eating rabbits.
@@ -43,11 +45,11 @@ public class Fox extends Animal
         super(field, location);
         if(randomAge) {
             setAge(rand.nextInt(MAX_AGE));
-            foodLevel = rand.nextInt(RABBIT_FOOD_VALUE);
+            foodLevel = rand.nextInt(RABBIT_FOOD_VALUE + MOSUE_FOOD_VALUE);
         }
         else {
             setAge(0);
-            foodLevel = RABBIT_FOOD_VALUE;
+            foodLevel = RABBIT_FOOD_VALUE + MOUSE_FOOD_VALUE;
         }
     }
     

@@ -1,4 +1,3 @@
-package foxes_rabbits_v2;
 
 import java.util.Random;
 

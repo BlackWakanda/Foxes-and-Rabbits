@@ -2,11 +2,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.Iterator;
 
-//Dean created this class to represent the mouse animal type in the simulation.
-// It extends the abstract Animal class and implements the specific behavior and characteristics of mice,
-// such as breeding age, maximum age, breeding probability, and litter size.
-// The Mouse class also defines how mice act in each simulation step,
-// including aging, giving birth, and moving to new locations in the field.
+/**
+ * @author Dean created this class to represent the mouse animal type in the simulation.
+ * It extends the abstract Animal class and implements the specific behavior and characteristics of mice,
+ * such as breeding age, maximum age, breeding probability, and litter size.
+ * The Mouse class also defines how mice act in each simulation step,
+ * including aging, giving birth, and moving to new locations in the field.
+ */
 public class Mouse extends Animal
 {
     private static final int BREEDING_AGE = 2;

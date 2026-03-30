@@ -67,6 +67,7 @@ public class Simulator
     /**
      * Set up colors for all configured animal types.
      * This method uses the configuration to assign colors dynamically.
+     * @author Carlton - Implemented during decoupling to remove direct class references
      */
     private void setupAnimalColors() {
         for (String typeName : AnimalConfig.getRegisteredTypes()) {
@@ -84,6 +85,9 @@ public class Simulator
      * Get the Class object for an animal type name.
      * This is a temporary solution - in a fully decoupled system,
      * colors would be handled differently.
+     * @param typeName The name of the animal type
+     * @return The Class object for the animal type, or null if not found
+     * @author Carlton - Added during decoupling to support configuration-driven color setup
      */
     private Class<?> getAnimalClass(String typeName) {
         try {
@@ -159,6 +163,8 @@ public class Simulator
     
     /**
      * Randomly populate the field with animals using configuration and factory.
+     * This method eliminates direct class instantiation by using AnimalFactory.
+     * @author Carlton - Refactored during decoupling to remove direct new Fox/Rabbit/Mouse calls
      */
     private void populate()
     {

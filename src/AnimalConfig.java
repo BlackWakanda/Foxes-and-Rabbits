@@ -4,9 +4,14 @@ import java.util.*;
 /**
  * Carlton created this class to centralize all configuration for animal types in the simulation.
  * This allows for easier maintenance and extension of the simulation without modifying the core logic in Simulator.
+ * <p>
  * Configuration class for animal types in the simulation.
  * This class provides a centralized way to configure all animal properties
  * without hard-coding them in the Simulator.
+ * </p>
+ *
+ * @author Carlton - Architect of the decoupling design pattern implementation
+ * @version 1.0
  */
 public class AnimalConfig {
 
@@ -72,6 +77,7 @@ public class AnimalConfig {
     /**
      * Get all registered animal type names.
      * @return Set of all registered animal type names
+     * @author Carlton - Added to support decoupled color setup in Simulator
      */
     public static Set<String> getRegisteredTypes() {
         return new HashSet<>(animalConfigs.keySet());

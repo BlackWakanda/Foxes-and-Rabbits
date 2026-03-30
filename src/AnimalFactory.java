@@ -4,10 +4,13 @@ import java.util.function.BiFunction;
 /**
  * Carlton created this class to serve as a factory for creating animals in the simulation.
  * This design allows for dynamic registration of new animal types without modifying the core logic of the Simulator.
+ * <p>
  * The AnimalFactory class provides a centralized way to create animal instances based on their type names,
- * Factory class for creating animals using registered creation functions.
- * This eliminates direct class instantiation and allows for dynamic registration
- * of new animal types without modifying the factory code.
+ * eliminating direct class instantiation and promoting loose coupling.
+ * </p>
+ *
+ * @author Carlton - Implemented factory pattern for decoupling animal creation
+ * @version 1.0
  */
 public class AnimalFactory {
 
@@ -30,6 +33,7 @@ public class AnimalFactory {
      * @param field The field where the animal will be placed
      * @param location The location where the animal will be placed
      * @return A new instance of the specified animal type, or null if type not found
+     * @author Carlton - Core factory method for decoupled animal creation
      */
     public static Animal createAnimal(String typeName, Field field, Location location) {
         BiFunction<Field, Location, Animal> creator = animalCreators.get(typeName.toLowerCase());

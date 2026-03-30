@@ -73,7 +73,7 @@ public class Simulator
         for (String typeName : AnimalConfig.getRegisteredTypes()) {
             AnimalConfig.AnimalTypeConfig config = AnimalConfig.getConfig(typeName);
             if (config != null) {
-                Class<?> animalClass = getAnimalClass(typeName);
+                Class<?> animalClass = AnimalFactory.getAnimalClass(typeName);
                 if (animalClass != null) {
                     view.setColor(animalClass, config.getColor());
                 }
@@ -89,18 +89,7 @@ public class Simulator
      * @return The Class object for the animal type, or null if not found
      * @author Carlton - Added during decoupling to support configuration-driven color setup
      */
-    private Class<?> getAnimalClass(String typeName) {
-        try {
-            switch (typeName.toLowerCase()) {
-                case "fox": return Class.forName("Fox");
-                case "rabbit": return Class.forName("Rabbit");
-                case "mouse": return Class.forName("Mouse");
-                default: return null;
-            }
-        } catch (ClassNotFoundException e) {
-            return null;
-        }
-    }
+    
     
     /**
      * Run the simulation from its current state for a reasonably long period,

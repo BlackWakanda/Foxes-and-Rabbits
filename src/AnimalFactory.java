@@ -70,6 +70,19 @@ public class AnimalFactory {
         return animalCreators.keySet();
     }
 
+    private Class<?> getAnimalClass(String typeName) {
+        try {
+            switch (typeName.toLowerCase()) {
+                case "fox": return Class.forName("Fox");
+                case "rabbit": return Class.forName("Rabbit");
+                case "mouse": return Class.forName("Mouse");
+                default: return null;
+            }
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+    }
+
     /**
      * Unregister an animal type.
      * @param typeName The name of the animal type to unregister

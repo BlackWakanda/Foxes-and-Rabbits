@@ -8,7 +8,7 @@ import java.awt.Color;
 /**
  * A simple predator-prey simulator, based on a rectangular field
  * containing rabbits and foxes.
- * 
+ *
  * @author David J. Barnes and Michael KÃ¶lling
  * @version 2011.07.31
  */
@@ -19,12 +19,6 @@ public class Simulator
     private static final int DEFAULT_WIDTH = 120;
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
-    // The probability that a fox will be created in any given grid position.
-    private static final double FOX_CREATION_PROBABILITY = 0.02;
-    // The probability that a rabbit will be created in any given grid position.
-    private static final double RABBIT_CREATION_PROBABILITY = 0.08;    
-
-    private static final double MOUSE_CREATION_PROBABILITY = 0.03;
 
     // List of animals in the field.
     private List<Animal> animals;
@@ -62,11 +56,46 @@ public class Simulator
 
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
-        view.setColor(Rabbit.class, Color.orange);
-        view.setColor(Fox.class, Color.blue);
-        
+
+        // Set up colors for all configured animal types
+        setupAnimalColors();
+
         // Setup a valid starting point.
         reset();
+    }
+
+    /**
+     * Set up colors for all configured animal types.
+     * This method uses the configuration to assign colors dynamically.
+     */
+    private void setupAnimalColors() {
+        for (String typeName : AnimalConfig.getRegisteredTypes()) {
+            AnimalConfig.AnimalTypeConfig config = AnimalConfig.getConfig(typeName);
+            if (config != null) {
+                Class<?> animalClass = getAnimalClass(typeName);
+                if (animalClass != null) {
+                    view.setColor(animalClass, config.getColor());
+                }
+            }
+        }
+    }
+
+    /**
+     * Get the Class object for an animal type name.
+     * This is a temporary solution - in a fully decoupled system,
+     * colors would be handled differently.
+     */
+    private Class<?> getAnimalClass(String typeName) {
+        try {
+            switch (typeName.toLowerCase()) {
+                case "fox": return Class.forName("Fox");
+                case "rabbit": return Class.forName("Rabbit");
+                case "mouse": return Class.forName("Mouse");
+                default: return null;
+            }
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
     }
     
     /**
@@ -84,8 +113,7 @@ public class Simulator
      * @param numSteps The number of steps to run for.
      */
     public void simulate(int numSteps)
-    {
-        for(int step = 1; step <= numSteps && view.isViable(field); step++) {
+   {     for(int step = 1; step <= numSteps && view.isViable(field); step++) {
             simulateOneStep();
         }
     }
@@ -100,7 +128,7 @@ public class Simulator
         step++;
 
         // Provide space for newborn animals.
-        List<Animal> newAnimals = new ArrayList<Animal>();        
+        List<Animal> newAnimals = new ArrayList<Animal>();
         // Let all rabbits act.
         for(Iterator<Animal> it = animals.iterator(); it.hasNext(); ) {
             Animal animal = it.next();
@@ -109,7 +137,7 @@ public class Simulator
                 it.remove();
             }
         }
-               
+
         // Add the newly born foxes and rabbits to the main lists.
         animals.addAll(newAnimals);
 
@@ -130,7 +158,7 @@ public class Simulator
     }
     
     /**
-     * Randomly populate the field with foxes and rabbits.
+     * Randomly populate the field with animals using configuration and factory.
      */
     private void populate()
     {
@@ -138,20 +166,17 @@ public class Simulator
         field.clear();
         for(int row = 0; row < field.getDepth(); row++) {
             for(int col = 0; col < field.getWidth(); col++) {
-                if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
-                    Location location = new Location(row, col);
-                    Fox fox = new Fox(true, field, location);
-                    animals.add(fox);
-                }
-                else if(rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
-                    Location location = new Location(row, col);
-                    Rabbit rabbit = new Rabbit(true, field, location);
-                    animals.add(rabbit);
-                }
-                else if (rand.nextDouble() <= MOUSE_CREATION_PROBABILITY){
-                    Location location = new Location(row, col);
-                    Mouse mouse = new Mouse(field, location, true);
-                    animals.add(mouse);
+                // Try to create animals based on their creation probabilities from config
+                for (String typeName : AnimalConfig.getAllTypeNames()) {
+                    AnimalConfig.AnimalTypeConfig config = AnimalConfig.getConfig(typeName);
+                    if (config != null && rand.nextDouble() <= config.getCreationProbability()) {
+                        Location location = new Location(row, col);
+                        Animal animal = AnimalFactory.createAnimal(typeName, field, location);
+                        if (animal != null) {
+                            animals.add(animal);
+                            break; // Only create one animal per location
+                        }
+                    }
                 }
                 // else leave the location empty.
             }
